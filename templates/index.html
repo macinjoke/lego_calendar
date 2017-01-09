@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lego Calendar</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 class="text-muted">Lego Calendar</h1>
+    </div>
+    <div>
+        <h4>{{message.start}}</h4>
+        <h3 class="text-info">{{message.schedule}}</h3>
+        {% if message.alert_case == 1 %}
+            <h2 class="text-danger">あと{{message.remaining_time_type}}分！急げ！</h2>
+        {% elif message.alert_case == 2 %}
+            <h2 class="text-warning">あと{{message.remaining_time_type}}分です</h2>
+        {% elif message.alert_case == 3 %}
+            <h2>あと1時間です</h2>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

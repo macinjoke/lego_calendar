@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from datetime import datetime
 import pytz
 from pytz import timezone
@@ -32,22 +32,24 @@ def hello():
 
     now = datetime.now(pytz.utc)
     start = nearest_event['start']['dateTime']
-    remaining_time = datetime.replace(datetime.strptime(start, '%Y-%m-%dT%H:%M:%S+09:00'),
-                                      tzinfo=timezone('Asia/Tokyo')) - now
-    response = '[{}] の予定は {}'.format(nearest_event['summary'], start)
+    start_datetime = datetime.replace(datetime.strptime(start, '%Y-%m-%dT%H:%M:%S+09:00'), tzinfo=timezone('Asia/Tokyo'))
+    start = start_datetime.strftime('%Y年%m月%d日 %H:%M')
+    remaining_time = start_datetime - now
+    message = {
+        'schedule': nearest_event['summary'],
+        'start': start
+    }
     alert_case = 0
+    remaining_time_types = [5, 30, 60]
     if remaining_time.days < 1:
-        if remaining_time.seconds < 60 * 5:
-            response += ' あと5分！急げ！'
-            alert_case = 1
-        elif remaining_time.seconds < 60 * 30:
-            response += ' あと30分です'
-            alert_case = 2
-        elif remaining_time.seconds < 60 * 60:
-            response += ' あと1時間です'
-            alert_case = 3
+        for i, remaining_time_type in enumerate(remaining_time_types):
+            if remaining_time.seconds < 60 * remaining_time_type:
+                alert_case = i + 1
+                message['remaining_time_type'] = remaining_time_type
+                break
     lego.alert(alert_case)
-    return response
+    message['alert_case'] = alert_case
+    return render_template('index.html', message=message)
 
 if __name__ == "__main__":
     app.run()
