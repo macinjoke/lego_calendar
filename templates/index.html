@@ -18,16 +18,25 @@
         <h1 class="text-muted">Lego Calendar</h1>
     </div>
     <div>
-        <h4>{{message.start}}</h4>
-        <h3 class="text-info">{{message.schedule}}</h3>
-        {% if message.alert_case == 1 %}
-            <h2 class="text-danger">あと{{message.remaining_time_type}}分！急げ！</h2>
-        {% elif message.alert_case == 2 %}
-            <h2 class="text-warning">あと{{message.remaining_time_type}}分です</h2>
-        {% elif message.alert_case == 3 %}
-            <h2>あと1時間です</h2>
+        {% if message.has_event %}
+            <h4>{{message.start}}</h4>
+            <h3 class="text-info">{{message.schedule}}</h3>
+            {% if message.remaining_time_type == 5 %}
+                <h2 class="text-danger">あと{{message.remaining_time}}分！急げ！</h2>
+            {% elif message.remaining_time_type == 30 %}
+                <h2 class="text-warning">あと{{message.remaining_time}}分です</h2>
+            {% elif message.remaining_time_type == 60 %}
+                <h2>あと{{message.remaining_time}}分です</h2>
+            {% endif %}
+        {% else %}
+            <h4>{{message.no_event_message}}</h4>
         {% endif %}
     </div>
 </div>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+setTimeout("location.reload()",1000*60);
+//-->
+</SCRIPT>
 </body>
 </html>
