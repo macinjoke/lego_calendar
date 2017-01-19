@@ -51,7 +51,7 @@ def hello():
             if remaining_time.seconds < 60 * remaining_time_type:
                 message['remaining_time_type'] = remaining_time_type
                 message['remaining_time'] = int(remaining_time.seconds / 60)
-                if remaining_time_type * 60 - remaining_time.seconds < 80:
+                if remaining_time_type * 60 - remaining_time.seconds < 60:
                     alert_case = i + 1
                 break
     lego.alert(alert_case)
