@@ -42,7 +42,7 @@ def hello():
     remaining_time = start_datetime - now
     message['schedule'] = nearest_event['summary']
     message['start'] = start
-    print('直近の予定'.format(message))
+    print('直近の予定{}'.format(message))
     message['has_event'] = True
     alert_case = 0
     remaining_time_types = [5, 30, 60]
